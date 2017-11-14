@@ -21,6 +21,19 @@ Don’t waste time in how consume the API or in the authentication. If we can te
 ## Bonus Points
 As fast response as possible.
 
+# Run
+To run app:
+```sh
+$ python main.py
+```
+To run unit test suite, install requirements:
+```sh
+$ pip install -r ./requirements.txt
+```
+Run tests:
+```sh
+$ nosetests -v
+```
 
 # Author
 Jose Bermudez

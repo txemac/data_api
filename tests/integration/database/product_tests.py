@@ -3,13 +3,13 @@ from __future__ import absolute_import, unicode_literals
 
 import unittest
 
-from alembic.command import upgrade, downgrade
+from alembic.command import downgrade, upgrade
 from alembic.config import Config
+from sqlalchemy import func
 
 import database
 import settings
 from database.product import Product
-
 
 config = Config(settings.ALEMBIC_TEST_FILE)
 
@@ -35,6 +35,10 @@ class TestsProduct(unittest.TestCase):
 
         count2 = database.session.query(Product).count()
         self.assertEqual(count1 + 1, count2)
+
+    def test_product_read_csv_max_id(self):
+        max_id = database.session.query(func.max(Product.id)).scalar()
+        self.assertEqual(max_id, 699224)
 
 
 if __name__ == '__main__':

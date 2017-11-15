@@ -30,5 +30,19 @@ def get_products_by_current_price():
     ))
 
 
+@app.route('/products/discount', methods=['GET'])
+def get_products_by_discount():
+    args = request.args
+    limit = int(args.get('limit', 20))
+    order = args.get('order', 'desc')
+
+    products = Product.get_products_by_discount(limit, order)
+
+    return generate_get(obj=ProductSerializer.serialize_list(
+        obj_list=products,
+        serializing_function=ProductSerializer.serialize_with_discount
+    ))
+
+
 if __name__ == '__main__':
     app.run()

@@ -17,6 +17,23 @@ class ProductSerializer(BasicSerializer):
         )
 
     @classmethod
+    def serialize_with_discount(cls, product):
+        if product is None:
+            return None
+
+        discount = 0
+        if product.current_price_value != product.original_price_value:
+            discount = (100 - (product.current_price_value * 100 / product.original_price_value))
+
+        return dict(
+            id=product.id,
+            current_price_value=product.current_price_value,
+            original_price_value=product.original_price_value,
+            url=product.url,
+            discount=discount
+        )
+
+    @classmethod
     def serialize_full(cls, product):
         if product is None:
             return None

@@ -58,7 +58,26 @@ class TestsApi(unittest.TestCase):
         response = self.app.get('/products/current_price?limit=10')
         self.assertEqual(response.status_code, 200)
         response_data = json.loads(response.get_data(as_text=True))
-        self.assertEqual(response_data[0]['id'], 236319)
+        self.assertEqual(len(response_data), 10)
+
+    def test_api_get_product_by_discount_desc(self):
+        response = self.app.get('/products/discount?order=desc')
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.get_data(as_text=True))
+        self.assertIn(response_data[0]['id'], [420179, 420528, 420531, 420171, 420449, 420623])
+        self.assertEqual(len(response_data), 20)
+
+    def test_api_get_product_by_discount_asc(self):
+        response = self.app.get('/products/discount?order=asc')
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response_data[0]['id'], 7704)
+        self.assertEqual(len(response_data), 20)
+
+    def test_api_get_product_by_discount_limit(self):
+        response = self.app.get('/products/discount?limit=10')
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.get_data(as_text=True))
         self.assertEqual(len(response_data), 10)
 
 

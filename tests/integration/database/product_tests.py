@@ -39,13 +39,21 @@ class TestsProduct(unittest.TestCase):
         max_id = database.session.query(func.max(Product.id)).scalar()
         self.assertEqual(max_id, 699224)
 
-    def test_product_get_order_by_price_desc(self):
-        result = Product.get_order_by_current_price(order='desc')
+    def test_product_get_products_by_price_desc(self):
+        result = Product.get_products_by_current_price(order='desc')
         self.assertEqual(result[0].id, 236319)
 
-    def test_product_get_order_by_price_asc(self):
-        result = Product.get_order_by_current_price(order='asc')
+    def test_product_get_products_by_price_asc(self):
+        result = Product.get_products_by_current_price(order='asc')
         self.assertIn(result[0].id, [420528, 420179, 420623, 420171, 420449, 420531])
+
+    def test_product_get_products_by_discount_asc(self):
+        result = Product.get_products_by_discount(order='asc')
+        self.assertEqual(result[0].id, 7704)
+
+    def test_product_get_products_by_discount_desc(self):
+        result = Product.get_products_by_discount(order='desc')
+        self.assertEqual(result[0].id, 420179)
 
 
 if __name__ == '__main__':

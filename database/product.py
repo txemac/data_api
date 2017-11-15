@@ -185,3 +185,22 @@ class Product(database.Base):
             result = result.order_by((100 - (cls.current_price_value * 100 / cls.original_price_value)).desc())
 
         return result.limit(limit=limit).all()
+
+    @classmethod
+    def get_products_by_discounted(cls, limit=20, order='desc'):
+        """
+        Get products ordered by discount.
+        Discounted = original_price - current_price
+
+        :param limit: limit of elements
+        :param order: asc or desc
+        :return: products
+        """
+        result = database.session.query(cls)
+
+        if order == 'asc':
+            result = result.order_by((cls.original_price_value - cls.current_price_value).asc())
+        else:
+            result = result.order_by((cls.original_price_value - cls.current_price_value).desc())
+
+        return result.limit(limit=limit).all()

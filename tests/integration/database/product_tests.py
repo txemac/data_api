@@ -55,6 +55,14 @@ class TestsProduct(unittest.TestCase):
         result = Product.get_products_by_discount(order='desc')
         self.assertEqual(result[0].id, 420179)
 
+    def test_product_get_products_by_discounted_asc(self):
+        result = Product.get_products_by_discounted(order='asc')
+        self.assertEqual(result[0].id, 3119)
+
+    def test_product_get_products_by_discounted_desc(self):
+        result = Product.get_products_by_discounted(order='desc')
+        self.assertEqual(result[0].id, 622139)
+
 
 if __name__ == '__main__':
     unittest.main()

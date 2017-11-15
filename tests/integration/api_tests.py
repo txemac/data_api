@@ -24,6 +24,8 @@ class TestsApi(unittest.TestCase):
             size_infos=u"[{'size_identifier': u'size-s', 'size_name': u'S', 'stock': 1}, {'size_identifier': "u"u'size-m', 'size_name': u'M', 'stock': 1}, {'size_identifier': u'size-l', 'size_name': u'L', 'stock': 1}, {'size_identifier': u'size-xl', 'size_name': u'XL', 'stock': 1}]",
             title=u"Hanes Men's 2 Pack Knit Shorts",
             url=u'http://www.walmart.com/ip/Hanes-Men-s-2-Pack-Knit-Shorts/34415953',
+            discounted=0.0,
+            discount=0,
             base_sku=u'34415953',
             brand=u'Hanes',
             category_names=u"Clothing,Men,Men's Sleepwear & Robes",
@@ -51,7 +53,8 @@ class TestsApi(unittest.TestCase):
         response = self.app.get('/products/current_price?order=asc')
         self.assertEqual(response.status_code, 200)
         response_data = json.loads(response.get_data(as_text=True))
-        self.assertIn(response_data[0]['id'], [420528, 420179, 420623, 420171, 420449, 420531])
+        response_data = sorted(response_data, key=lambda k: k['id'])
+        self.assertEqual(response_data[0]['id'], 39406)
         self.assertEqual(len(response_data), 20)
 
     def test_api_get_product_by_current_price_limit(self):
@@ -64,7 +67,8 @@ class TestsApi(unittest.TestCase):
         response = self.app.get('/products/discount?order=desc')
         self.assertEqual(response.status_code, 200)
         response_data = json.loads(response.get_data(as_text=True))
-        self.assertIn(response_data[0]['id'], [420179, 420528, 420531, 420171, 420449, 420623])
+        response_data = sorted(response_data, key=lambda k: k['id'])
+        self.assertEqual(response_data[0]['id'], 241615)
         self.assertEqual(len(response_data), 20)
 
     def test_api_get_product_by_discount_asc(self):
@@ -76,6 +80,27 @@ class TestsApi(unittest.TestCase):
 
     def test_api_get_product_by_discount_limit(self):
         response = self.app.get('/products/discount?limit=10')
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(len(response_data), 10)
+
+    def test_api_get_product_by_discounted_desc(self):
+        response = self.app.get('/products/discounted?order=desc')
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(response_data[0]['id'], 622139)
+        self.assertEqual(len(response_data), 20)
+
+    def test_api_get_product_by_discounted_asc(self):
+        response = self.app.get('/products/discounted?order=asc')
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.get_data(as_text=True))
+        response_data = sorted(response_data, key=lambda k: k['id'], reverse=False)
+        self.assertEqual(response_data[0]['id'], 3092)
+        self.assertEqual(len(response_data), 20)
+
+    def test_api_get_product_by_discounted_limit(self):
+        response = self.app.get('/products/discounted?limit=10')
         self.assertEqual(response.status_code, 200)
         response_data = json.loads(response.get_data(as_text=True))
         self.assertEqual(len(response_data), 10)

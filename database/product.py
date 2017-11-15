@@ -204,3 +204,14 @@ class Product(database.Base):
             result = result.order_by((cls.original_price_value - cls.current_price_value).desc())
 
         return result.limit(limit=limit).all()
+
+    @classmethod
+    def get_products_by_colour(cls, colour):
+        """
+        Get products with a colour.
+
+        :param colour: colour to filter
+        :param limit: limit of elements
+        :return: products
+        """
+        return database.session.query(cls).filter(cls.color_name == colour).all()

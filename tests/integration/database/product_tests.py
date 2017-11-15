@@ -63,6 +63,14 @@ class TestsProduct(unittest.TestCase):
         result = Product.get_products_by_discounted(order='desc')
         self.assertEqual(result[0].id, 622139)
 
+    def test_product_get_by_colour_red(self):
+        result = Product.get_products_by_colour(colour='red')
+        self.assertEqual(len(result), 28)
+
+    def test_product_get_by_colour_amarillo(self):
+        result = Product.get_products_by_colour(colour='amarillo')
+        self.assertEqual(len(result), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

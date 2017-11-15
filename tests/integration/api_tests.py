@@ -105,6 +105,18 @@ class TestsApi(unittest.TestCase):
         response_data = json.loads(response.get_data(as_text=True))
         self.assertEqual(len(response_data), 10)
 
+    def test_api_get_product_by_colour_red(self):
+        response = self.app.get('/products/colour/{colour}'.format(colour='red'))
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(len(response_data), 28)
+
+    def test_api_get_product_by_colour_amarillo(self):
+        response = self.app.get('/products/colour/{colour}'.format(colour='amarillo'))
+        self.assertEqual(response.status_code, 200)
+        response_data = json.loads(response.get_data(as_text=True))
+        self.assertEqual(len(response_data), 0)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -58,5 +58,15 @@ def get_products_by_discounted():
     ))
 
 
+@app.route('/products/colour/<string:colour>', methods=['GET'])
+def get_products_by_colour(colour):
+    products = Product.get_products_by_colour(colour=colour)
+
+    return generate_get(obj=ProductSerializer.serialize_list(
+        obj_list=products,
+        serializing_function=ProductSerializer.serialize_full
+    ))
+
+
 if __name__ == '__main__':
     app.run()

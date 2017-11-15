@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import, unicode_literals
 
-from sqlalchemy import Column, DateTime, Integer, Text, text, Float
+from sqlalchemy import Column, DateTime, Float, Integer, Text, text
 
 import database
 
@@ -138,3 +138,31 @@ class Product(database.Base):
         database.session.add(product)
         database.session.commit()
         return product
+
+    @classmethod
+    def get_product_by_id(cls, product_id):
+        """
+        Get a product by ID.
+
+        :param product_id: ID of the product
+        :return: product
+        """
+        return database.session.query(cls).filter(cls.id == product_id).first()
+
+    @classmethod
+    def get_products_by_current_price(cls, limit=20, order='desc'):
+        """
+        Get products ordered by price.
+
+        :param limit: limit of elements
+        :param order: asc or desc
+        :return: products
+        """
+        result = database.session.query(cls)
+
+        if order == 'asc':
+            result = result.order_by(cls.current_price_value.asc())
+        else:
+            result = result.order_by(cls.current_price_value.desc())
+
+        return result.limit(limit=limit).all()

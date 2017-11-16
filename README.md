@@ -37,9 +37,13 @@ $ python api.py
 
 # Endpoints:
 /products/39 --> to get the product with ID "39".
+
 /products/current_price --> to get 20 products ordered by price. Parameters: order [desc, asc], limit.
+
 /products/discount --> to get 20 products ordered by discount. Parameters: order [desc, asc], limit.
+
 /products/discounted --> to get 20 products ordered by discounted. Parameters: order [desc, asc], limit.
+
 /products/colour/red --> to get all products with colour "red".
 
 # Author

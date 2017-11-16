@@ -1,6 +1,5 @@
 # DATA & API TEST Requirements
-1. Download this CSV:
-http://stylesage.share.s3.amazonaws.com/products.zip
+1. Download the CSV.
 2. Write a small app that publish an API Rest with these endpoints:
 - Give me 20 products ordered by price.
 - Give me 20 products ordered by discount.
@@ -21,7 +20,7 @@ Don’t waste time in how consume the API or in the authentication. If we can te
 ## Bonus Points
 As fast response as possible.
 
-# Run
+# Tests
 To run unit test suite, install requirements:
 ```sh
 $ pip install -r ./requirements.txt
@@ -30,10 +29,18 @@ Run tests:
 ```sh
 $ nosetests -v
 ```
-To run app:
+
+# Run app:
 ```sh
 $ python api.py
 ```
+
+# Endpoints:
+/products/39 --> to get the product with ID "39".
+/products/current_price --> to get 20 products ordered by price. Parameters: order [desc, asc], limit.
+/products/discount --> to get 20 products ordered by discount. Parameters: order [desc, asc], limit.
+/products/discounted --> to get 20 products ordered by discounted. Parameters: order [desc, asc], limit.
+/products/colour/red --> to get all products with colour "red".
 
 # Author
 Jose Bermudez
